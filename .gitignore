@@ -6,5 +6,4 @@
 !.yarn/versions
 .pnp.*
 coverage
-jest.config.js
 dist
