@@ -48,7 +48,7 @@ def main():
     major = version[0]
     minor = version[1]
     patch = version[2]
-    if version_type == "releaseCandidate":
+    if release_type == "releaseCandidate":
         release_candidate_version = version[3]
     targets = sys.argv[3].split(",")
 
