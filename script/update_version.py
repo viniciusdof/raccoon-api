@@ -57,11 +57,11 @@ def main():
         build_number = int(now.timestamp())
         version = f"{major}.{minor}.{patch}.{build_number}"
     elif release_type == "releaseCandidate":
-        version = f"{major}.{minor}.{patch}.RC{release_candidate_version+1}"
+        version = f"{major}.{minor}.{patch}.RC{int(release_candidate_version)+1}"
     elif release_type == "release":
-        version = f"{major}.{minor+1}.{patch}"
+        version = f"{major}.{int(minor)+1}.{patch}"
     elif release_type == "hotfix":
-        version = f"{major}.{minor}.{patch+1}"
+        version = f"{major}.{minor}.{int(patch)+1}"
     else:
         print("Invalid release type")
         sys.exit(1)
