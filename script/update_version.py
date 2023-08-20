@@ -37,7 +37,7 @@ def update_helm_chart_version(version):
 
 
 def main():
-    if len(sys.argv) < 7:
+    if len(sys.argv) < 3:
         print("Usage: python update_version.py <release_type> <version> <targets>")
         print("Targets: comma-separated list of targets to update (package,json,gradle,helm)")
         sys.exit(1)
@@ -50,7 +50,6 @@ def main():
     patch = version[2]
     if version_type == "releaseCandidate":
         release_candidate_version = version[3]
-
     targets = sys.argv[3].split(",")
 
     if release_type == "develop":
