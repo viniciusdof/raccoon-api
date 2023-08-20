@@ -8,6 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      VERSION: 0.0.0
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,10 +29,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r script/requirements.txt
 
+      - name: Get version
+        id: get-version
+        run: echo "::set-output name=version::$(node -p 'require(\"./package.json\").version')"
+
       - name: Update version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          python script/update_version.py release $VERSION package.json
+        run: python script/update_version.py release $VERSION package.json
 
       - name: Validate TypeScript syntax
         run: yarn lint
