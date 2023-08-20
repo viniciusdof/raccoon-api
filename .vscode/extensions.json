@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "dotenv.dotenv-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "sonarsource.sonarlint-vscode",
+    "seatonjiang.gitmoji-vscode"
+  ],
+  "unwantedRecommendations": []
+}
