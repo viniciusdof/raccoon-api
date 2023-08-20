@@ -1,0 +1,52 @@
+name: Build and release
+
+on:
+    push:
+      branches:
+        - main
+  
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+  
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: "14.x"
+  
+        - name: Install dependencies
+          run: |
+            yarn install
+
+            
+        - name: Install dependencies
+          run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+   
+        - name: Update version
+          run: |
+            VERSION=$(node -p "require('./package.json').version")
+            python script/update_version.py release $VERSION package.json
+  
+        - name: Validate TypeScript syntax
+          run: yarn lint
+  
+        - name: Run tests
+          run: yarn test
+  
+        - name: Build Docker image
+          run: |
+            docker build -t my-image .
+            docker tag my-image my-registry/my-image:${VERSION}
+            docker push my-registry/my-image:${VERSION}
+  
+        - name: Commit and push changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: 'Update version to v${VERSION}'
+            commit_options: '--no-verify'
