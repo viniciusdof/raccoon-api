@@ -6,7 +6,7 @@ import yaml
 
 
 def update_package_json(version):
-    with open("../package.json", "r+") as f:
+    with open("package.json", "r+") as f:
         data = json.load(f)
         data["version"] = version
         f.seek(0)
@@ -15,7 +15,7 @@ def update_package_json(version):
 
 
 def update_gradle_version(version):
-    with open("../gradle.properties", "r+") as f:
+    with open("gradle.properties", "r+") as f:
         lines = f.readlines()
         for i, line in enumerate(lines):
             if line.strip().startswith("version"):
@@ -46,8 +46,13 @@ def main():
     version = sys.argv[2]
     version.split(".")
     major = version[0]
-    minor = version[1]
-    patch = version[2]
+    minor = version[2]
+    patch = version[4]
+    print(f"Release type: {release_type}")
+    print(f"Version: {version}")
+    print(f"Major: {major}")
+    print(f"Minor: {minor}")
+    print(f"Patch: {patch}")
     if release_type == "releaseCandidate":
         release_candidate_version = version[3]
     targets = sys.argv[3].split(",")
@@ -55,14 +60,14 @@ def main():
     if release_type == "develop":
         now = datetime.datetime.now()
         build_number = int(now.timestamp())
-        version = f"{major}.{minor}.{patch}.{build_number}"
+        version = f"{major}.{minor}.0.{build_number}"
     elif release_type == "releaseCandidate":
-        version = f"{major}.{minor}.{patch}.RC{int(release_candidate_version)+1}"
+        version = f"{major}.{minor}.0.RC{int(release_candidate_version)+1}"
     elif release_type == "release":
-        version = f"{major}.{int(minor)+1}.{patch}"
+        version = f"{major}.{int(minor)+1}.0"
     elif release_type == "hotfix":
         version = f"{major}.{minor}.{int(patch)+1}"
-    else:
+    else: 
         print("Invalid release type")
         sys.exit(1)
 
