@@ -1,10 +1,10 @@
 import { Router, Request, Response } from "express";
 
 const router = Router();
+const animals = ["Raccoon", "Opossum", "Rat"];
 
 router.get("/", (req: Request, res: Response): void => {
-  const users = ["Raccoon", "Opossum", "Rat"];
-  res.status(200).send(users);
+  res.status(200).send(animals);
 });
 
 export { router };
