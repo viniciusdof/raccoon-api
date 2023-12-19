@@ -4,3 +4,4 @@
 .github
 .gitattributes
 script
+node_modules
